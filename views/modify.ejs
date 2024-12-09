@@ -1,0 +1,42 @@
+<head>
+  <link rel="stylesheet" href="/css/main.css" />
+</head>
+<h1>Edit Student</h1>
+<form action="/students/<%= index %>?_method=PUT" method="POST">
+  <label>
+    Name:
+    <input type="text" name="name" value="<%= student.name %>" required />
+  </label>
+  <br />
+  <label>
+    Email:
+    <input type="email" name="email" value="<%= student.email %>" required />
+  </label>
+  <br />
+  <label>
+    Student ID:
+    <input
+      type="text"
+      name="studentID"
+      value="<%= student.studentID %>"
+      required
+    />
+  </label>
+  <br />
+  <label>
+    Date of Birth:
+    <input
+      type="date"
+      name="dateOfBirth"
+      value="<%= student.dateOfBirth %>"
+      required
+    />
+  </label>
+  <br />
+  <label>
+    Graduated: <input type="checkbox" name="graduated" <%= student.graduated ?
+    "checked" : "" %> />
+  </label>
+  <br />
+  <input type="submit" value="Update Student" />
+</form>
