@@ -37,13 +37,22 @@ const bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json({ extended: true }));
 
+app.use((req, res, next) => {
+  const time = new Date();
+
+  console.log(
+    `-${time.toLocaleDateString()}: Received a ${req.method} request to ${
+      req.url
+    }`
+  );
+  next();
+});
+
+//-==================================================================================================
+
 app.listen(PORT, () => {
   console.log(`Listening on Port: ${PORT}`);
 });
-
-// app.get("", (req, res) => {
-//   res.render("index");
-// });
 
 //Routes
 app.use("/api/students", studentsRoutes);
@@ -100,4 +109,10 @@ app.get("/", async (req, res) => {
   } catch (err) {
     res.send(err).status(400);
   }
+});
+
+//=============================This always runs at the end======================================//
+app.use((req, res) => {
+  res.status(404);
+  res.json({ error: "Resources not found" });
 });
