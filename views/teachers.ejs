@@ -1,30 +1,48 @@
 <h1>Teachers List</h1>
-<ul>
-  <% teachers.forEach((teacher, index) => { %>
-  <li>
-    <strong>Teacher ID:</strong> <%= teacher.teacherID %><br />
-    <strong>Name:</strong> <%= teacher.name %><br />
-    <strong>Email:</strong> <%= teacher.email %><br />
-    <strong>Subject:</strong> <%= teacher.subject %><br />
-    <strong>Years of Experience:</strong> <%= teacher.yearsOfExperience %><br />
-    <strong>Date of Hire:</strong> <%= teacher.dateOfHire %><br />
-    <strong>Full Time:</strong> <%= teacher.isFullTime ? "Yes" : "No" %>
-  </li>
-  <form action="/teachers/<%= index %>?_method=DELETE" method="POST">
-    <button type="submit">Remove</button>
-  </form>
 
-  <form action="/teachers/<%= index %>/edit" method="GET">
-    <button type="submit">Edit</button>
-  </form>
+<% if (teachers.length > 0) { %>
+<ul>
+  <% teachers.forEach((teacher) => { %>
+  <li>
+    <strong>Name:</strong> <%= teacher.name.first %> <%= teacher.name.last %><br />
+    <strong>Email:</strong> <%= teacher.email %><br />
+    <strong>Instrument Specialties:</strong> <%=
+    teacher.instrumentSpecialties.join(", ") %><br />
+    <strong>Experience:</strong> <%= teacher.experienceYears %> years<br />
+    <strong>Hire Date:</strong> <%= new
+    Date(teacher.hireDate).toLocaleDateString() %><br />
+    <strong>Full-Time:</strong> <%= teacher.isFullTime ? "Yes" : "No" %><br />
+
+    <!-- Delete Teacher -->
+    <form
+      action="/api/teachers/<%= teacher._id %>?_method=DELETE"
+      method="POST"
+    >
+      <button type="submit">Remove</button>
+    </form>
+
+    <!-- Edit Teacher -->
+    <form action="/teachers/<%= teacher._id %>/edit" method="GET">
+      <button type="submit">Edit</button>
+    </form>
+  </li>
   <% }) %>
 </ul>
+<% } else { %>
+<p>No teachers available. Add a new teacher below:</p>
+<% } %>
 
+<!-- Add New Teacher Form -->
 <h2>Add New Teacher</h2>
-<form action="/teachers" method="POST">
+<form action="/api/teachers" method="POST">
   <label>
-    Name:
-    <input type="text" name="name" required />
+    First Name:
+    <input type="text" name="name.first" required />
+  </label>
+  <br />
+  <label>
+    Last Name:
+    <input type="text" name="name.last" required />
   </label>
   <br />
   <label>
@@ -32,19 +50,48 @@
     <input type="email" name="email" required />
   </label>
   <br />
+  <label> Instrument Specialties: </label>
+  <div>
+    <label>
+      <input type="checkbox" name="instrumentSpecialties" value="guitar" />
+      Guitar
+    </label>
+
+    <label>
+      <input type="checkbox" name="instrumentSpecialties" value="bass" />
+      Bass
+    </label>
+
+    <label>
+      <input type="checkbox" name="instrumentSpecialties" value="drums" />
+      Drums
+    </label>
+
+    <label>
+      <input type="checkbox" name="instrumentSpecialties" value="vocals" />
+      Vocals
+    </label>
+
+    <label>
+      <input type="checkbox" name="instrumentSpecialties" value="keys" />
+      Keys
+    </label>
+
+    <label>
+      <input type="checkbox" name="instrumentSpecialties" value="other" />
+      Other
+    </label>
+  </div>
+
+  <br />
   <label>
-    Subject:
-    <input type="text" name="subject" required />
+    Experience (Years):
+    <input type="number" name="experienceYears" required min="0" />
   </label>
   <br />
   <label>
-    Years of Experience:
-    <input type="number" name="yearsOfExperience" required />
-  </label>
-  <br />
-  <label>
-    Date of Hire:
-    <input type="date" name="dateOfHire" required />
+    Hire Date:
+    <input type="date" name="hireDate" required />
   </label>
   <br />
   <label>

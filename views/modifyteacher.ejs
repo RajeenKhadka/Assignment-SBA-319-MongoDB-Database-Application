@@ -1,57 +1,103 @@
 <head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="/css/main.css" />
+  <title>Edit Teacher</title>
 </head>
-<h1>Edit Teacher</h1>
-<form action="/teachers/<%= index %>?_method=PUT" method="POST">
-  <label>
-    Name:
-    <input type="text" name="name" value="<%= teacher.name %>" required />
-  </label>
-  <br />
-  <label>
-    Email:
-    <input type="email" name="email" value="<%= teacher.email %>" required />
-  </label>
-  <br />
-  <label>
-    Teacher ID:
-    <input
-      type="text"
-      name="teacherID"
-      value="<%= teacher.teacherID %>"
-      required
-    />
-  </label>
-  <br />
-  <label>
-    Subject:
-    <input type="text" name="subject" value="<%= teacher.subject %>" required />
-  </label>
-  <br />
-  <label>
-    Years of Experience:
-    <input
-      type="number"
-      name="yearsOfExperience"
-      value="<%= teacher.yearsOfExperience %>"
-      required
-    />
-  </label>
-  <br />
-  <label>
-    Date of Hire:
-    <input
-      type="date"
-      name="dateOfHire"
-      value="<%= teacher.dateOfHire %>"
-      required
-    />
-  </label>
-  <br />
-  <label>
-    Full Time: <input type="checkbox" name="isFullTime" <%= teacher.isFullTime ?
-    "checked" : "" %> />
-  </label>
-  <br />
-  <input type="submit" value="Update Teacher" />
-</form>
+<body>
+  <header>
+    <h1>Edit Teacher</h1>
+    <p>Modify the details of the selected teacher below:</p>
+  </header>
+
+  <main>
+    <form action="/api/teachers/<%= teacher._id %>?_method=PUT" method="POST">
+      <!-- First Name -->
+      <label>
+        First Name:
+        <input
+          type="text"
+          name="name.first"
+          value="<%= teacher.name.first %>"
+          required
+        />
+      </label>
+      <br />
+
+      <!-- Last Name -->
+      <label>
+        Last Name:
+        <input
+          type="text"
+          name="name.last"
+          value="<%= teacher.name.last %>"
+          required
+        />
+      </label>
+      <br />
+
+      <!-- Email -->
+      <label>
+        Email:
+        <input
+          type="email"
+          name="email"
+          value="<%= teacher.email %>"
+          required
+        />
+      </label>
+      <br />
+
+      <!-- Instrument Specialties -->
+
+      <legend>Instrument Specialties:</legend>
+      <% ["guitar", "bass", "drums", "vocals", "keys",
+      "other"].forEach((instrument) => { %>
+      <label>
+        <input type="checkbox" name="instrumentSpecialties" value="<%=
+        instrument %>" <%= teacher.instrumentSpecialties.includes(instrument) ?
+        "checked" : "" %> /> <%= instrument.charAt(0).toUpperCase() +
+        instrument.slice(1) %>
+      </label>
+
+      <% }) %>
+
+      <br />
+
+      <!-- Experience Years -->
+      <label>
+        Experience (Years):
+        <input
+          type="number"
+          name="experienceYears"
+          value="<%= teacher.experienceYears %>"
+          min="0"
+          required
+        />
+      </label>
+      <br />
+
+      <!-- Hire Date -->
+      <label>
+        Hire Date:
+        <input
+          type="date"
+          name="hireDate"
+          value="<%= teacher.hireDate.toISOString().split('T')[0] %>"
+          required
+        />
+      </label>
+      <br />
+
+      <!-- Full Time -->
+      <label>
+        Full Time: <input type="checkbox" name="isFullTime" <%=
+        teacher.isFullTime ? "checked" : "" %> >
+      </label>
+      <br />
+
+      <!-- Submit Button -->
+      <button type="submit">Update Teacher</button>
+    </form>
+  </main>
+</body>

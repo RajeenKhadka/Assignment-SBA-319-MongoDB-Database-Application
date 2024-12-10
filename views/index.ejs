@@ -1,2 +1,19 @@
-<h1>Welcome to Student Center</h1>
-<p>Where you can see and enroll in out Software Enginnering Program</p>
+<h1>Welcome to the Student & Teacher Center</h1>
+<p>
+  Manage and organize your data effortlessly. Add, edit, and explore with ease!
+</p>
+
+<h2>Available Courses</h2>
+<% if (courses && courses.length > 0) { %>
+<ul>
+  <% courses.forEach((course) => { %>
+  <li>
+    <strong>Name:</strong> <%= course.name %><br />
+    <strong>Instrument:</strong> <%= course.instrument %><br />
+    <strong>Level:</strong> <%= course.level.join(", ") %>
+  </li>
+  <% }); %>
+</ul>
+<% } else { %>
+<p>No courses available at the moment. Add new courses to get started!</p>
+<% } %>
