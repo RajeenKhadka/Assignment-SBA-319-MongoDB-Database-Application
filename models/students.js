@@ -33,6 +33,9 @@ const studentSchema = new mongoose.Schema(
   }
 );
 
+//Coumpound Index on name for fast lookup
+studentSchema.index({ "name.first": 1, "name.last": 1 });
+
 const Student = mongoose.model("Student", studentSchema);
 
 module.exports = Student;

@@ -38,6 +38,9 @@ const teacherSchema = new mongoose.Schema(
   }
 );
 
+//Index on instrumentSpecialties to filter by instruments
+teacherSchema.index({ instrumentSpecialties: 1 });
+
 const Teacher = mongoose.model("Teacher", teacherSchema);
 
 module.exports = Teacher;

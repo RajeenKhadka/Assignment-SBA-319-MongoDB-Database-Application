@@ -23,6 +23,11 @@ const courseSchema = new mongoose.Schema(
   }
 );
 
+//Index on instrument for filtering by instrument
+courseSchema.index({ instrument: 1 });
+//Index on level for filtering by skill levels
+courseSchema.index({ level: 1 });
+
 const Course = mongoose.model("Course", courseSchema);
 
 module.exports = Course;
