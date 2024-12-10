@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const Student = require("../models/students");
 
+//add data
 router.get("/seed", async (req, res) => {
   try {
     await Student.create([
@@ -68,6 +69,7 @@ router.get("/seed", async (req, res) => {
   }
 });
 
+//display data in localhost:5052/api/students
 router.get("/", async (req, res) => {
   try {
     const foundStudents = await Student.find({});
@@ -77,6 +79,7 @@ router.get("/", async (req, res) => {
   }
 });
 
+//CREATE
 router.post("/", async (req, res) => {
   if (req.body.enrolled === "on") {
     req.body.enrolled = true;
@@ -86,6 +89,33 @@ router.post("/", async (req, res) => {
 
   try {
     const createdStudent = await Student.create(req.body);
+    res.status(200).redirect("/students");
+  } catch (err) {
+    res.status(400).send(err);
+  }
+});
+
+//EDIT
+router.put("/:id", async (req, res) => {
+  try {
+    req.body.enrolled = req.body.enrolled === "on";
+
+    const updatedStudent = await Student.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      { new: true }
+    );
+
+    res.status(200).redirect("/students");
+  } catch (err) {
+    res.status(400).send(err);
+  }
+});
+
+//DELETE
+router.delete("/:id", async (req, res) => {
+  try {
+    const deletedStudent = await Student.findByIdAndDelete(req.params.id);
     res.status(200).redirect("/students");
   } catch (err) {
     res.status(400).send(err);

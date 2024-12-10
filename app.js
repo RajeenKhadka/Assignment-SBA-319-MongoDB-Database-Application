@@ -50,3 +50,13 @@ app.get("/students", async (req, res) => {
     res.send(err).status(400);
   }
 });
+
+//Modify Route
+app.get("/students/:id/edit", async (req, res) => {
+  try {
+    const foundStudent = await Student.findById(req.params.id);
+    res.status(200).render("modify", { student: foundStudent });
+  } catch (err) {
+    res.status(400).send(err);
+  }
+});

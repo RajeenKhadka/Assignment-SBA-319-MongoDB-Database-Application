@@ -12,7 +12,10 @@
     <strong>Enrolled:</strong> <%= student.enrolled ? "Yes" : "No" %><br />
 
     <!-- Delete Student -->
-    <form action="/students/<%= student._id %>?_method=DELETE" method="POST">
+    <form
+      action="/api/students/<%= student._id %>?_method=DELETE"
+      method="POST"
+    >
       <button type="submit">Remove</button>
     </form>
 
