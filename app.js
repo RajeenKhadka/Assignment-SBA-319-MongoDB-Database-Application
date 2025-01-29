@@ -20,7 +20,6 @@ const coursesRoutes = require("./routes/courses");
 
 //Static Files
 app.use(express.static("public"));
-app.use("/css", express.static(__dirname + "public/css"));
 
 //Set Templating Engine
 app.use(expressLayouts);
@@ -48,7 +47,7 @@ app.use((req, res, next) => {
   next();
 });
 
-//-==================================================================================================
+//==================================================================================================
 
 app.listen(PORT, () => {
   console.log(`Listening on Port: ${PORT}`);
